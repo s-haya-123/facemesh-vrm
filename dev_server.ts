@@ -12,7 +12,10 @@ const app = opine();
 app.use("/static", serveStatic(join(__dirname, "static")));
 const browserBundlePath = "/static/index.js";
 const html =
-  `<html><head><script type="module" src="${browserBundlePath}"></script><style>* { font-family: Helvetica; }</style></head><body></body></html>`;
+  `<html><head><script type="module" src="${browserBundlePath}"></script><style>* { font-family: Helvetica; }</style></head>
+  <body style="display:flex;align-items: center;">
+  <video id="debug"></video>
+  </body></html>`;
 app.use("/", (req: Request, res: Response, next: NextFunction) => {
   res.type("text/html").send(html);
 });
