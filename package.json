@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "build": "esbuild --bundle src/index.ts --outfile=static/index.js",
+    "serve": "deno run --allow-net --allow-read dev_server.ts",
+    "watch": "chokidar 'src/**/*.ts' -c 'npm run build' --initial"
+  },
+  "devDependencies": {
+    "chokidar-cli": "^2.1.0",
+    "esbuild": "^0.5.4",
+    "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "@pixiv/three-vrm": "^0.3.5",
+    "@tensorflow-models/facemesh": "^0.0.4",
+    "three": "^0.117.1"
+  }
+}
