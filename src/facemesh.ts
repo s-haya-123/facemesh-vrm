@@ -1,5 +1,9 @@
-import facemesh from '@tensorflow-models/facemesh';
-
+import * as facemesh from '@tensorflow-models/facemesh';
+require('@tensorflow/tfjs-backend-webgl');
+let model: facemesh.FaceMesh | undefined;
 export async function loadFacemesh() {
-    const model = await facemesh.load();
+    model = await facemesh.load();
+}
+export async function estimateFace(input: HTMLVideoElement) {
+    console.log(await model?.estimateFaces(input));
 }

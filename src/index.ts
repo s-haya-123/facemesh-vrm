@@ -3,6 +3,7 @@ import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 // import {  } from 'three/examples/jsm/'
 import { VRMUtils, VRM, VRMSchema } from '@pixiv/three-vrm';
+import { loadFacemesh, estimateFace } from './facemesh';
 // renderer
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth/2, window.innerHeight/2 );
@@ -62,13 +63,15 @@ scene.add( gridHelper );
 
 const axesHelper = new THREE.AxesHelper( 5 );
 scene.add( axesHelper );
-
+let loaded = false
 function animate() {
     requestAnimationFrame( animate );
+    const video = loaded && document.getElementById('debug') as HTMLVideoElement | undefined;
     renderer.render( scene, camera );
 }
 async function startVideo() {
     const video = document.getElementById('debug') as HTMLVideoElement | undefined;
+    await loadFacemesh();
     const stream = await navigator.mediaDevices.getUserMedia({
         video: {
             width: window.innerWidth/2, 
@@ -78,8 +81,25 @@ async function startVideo() {
     });
     if(video) {
         video.srcObject = stream;
-        video.onloadedmetadata = (evt) => video.play();
+        video.onloadedmetadata = (evt) => {
+            video.play();
+            loaded = true;
+            setTimeout(() => video && estimateFace(video), 100);
+            renderDegugCanvas();
+        };
     }
+}
+function renderDegugCanvas() {
+    const video = document.getElementById("debug") as HTMLVideoElement;
+    const canvas = document.getElementById("debug-canvas") as HTMLCanvasElement;
+    canvas.width = window.innerWidth/2;
+    canvas.height = window.innerHeight/2;
+    const ctx = canvas.getContext('2d');
+    setInterval(() => {
+        if (canvas && ctx){
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        }
+    }, 10000/120);
 }
 
 animate();
