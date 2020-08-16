@@ -7,14 +7,20 @@
   "devDependencies": {
     "chokidar-cli": "^2.1.0",
     "esbuild": "^0.5.4",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.5",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.8",
+    "ts-loader": "^6.2.1",
+    "worker-plugin": "^3.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack-dev-server": "^3.8.0"
   },
   "dependencies": {
     "@pixiv/three-vrm": "^0.3.5",
     "@tensorflow-models/facemesh": "^0.0.3",
-    "@tensorflow/tfjs-backend-webgl": "^2.3.0",
-    "@tensorflow/tfjs-converter": "^2.3.0",
-    "@tensorflow/tfjs-core": "^2.3.0",
+    "@tensorflow/tfjs-backend-webgl": "^2.0.1",
+    "@tensorflow/tfjs-converter": "^2.0.1",
+    "@tensorflow/tfjs-core": "^2.0.1",
     "three": "^0.117.1"
   }
 }
